@@ -15,7 +15,7 @@ function Login() {
             password
         }).then((success) => {
             console.log(success)
-            navigate('/todoapp')
+            navigate('/todos')
         }).catch((err) => {
             console.log(err)
         })
