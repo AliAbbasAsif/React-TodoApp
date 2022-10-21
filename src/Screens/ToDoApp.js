@@ -9,74 +9,71 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import AddIcon from "@mui/icons-material/Add";
+import '../App.css'
 
 
 function ToDoApp() {
-    const location = useLocation();
-    const navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [auth, setAuth] = React.useState(true);
+  const [anchorEl, setAnchorEl] = React.useState(null)
 
-    const [auth, setAuth] = React.useState(true);
-    const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleChange = (event) => {
+    setAuth(event.target.checked);
+  };
 
-    const handleChange = (event) => {
-        setAuth(event.target.checked);
-    };
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-    const handleMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+  let [todo, setTodo] = useState("");
+  let [listOfTodos, setList] = useState([]);
+  let add = () => {
+ 
+    const reference = ref(database, `todoapp/${location.state.username}`);
+    const newRef = push(reference);
+    set(newRef, {
+      todo,
+      time: `${12 + new Date().getHours()}:${new Date().getMinutes()}`,
+    });
+  };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    let [todo, setTodo] = useState("");
-    let [listOfTodos, setList] = useState([]);
-
-    let add = () => {
-        const reference = ref(database, `todos/${location.state.userName}`);
-        const newRef = push(reference);
-        set(newRef, {
-            todo,
-            time: `${12 + new Date().getHours()}:${new Date().getMinutes()}`,
-        });
-    };
-    const handleGetDatabase = () => {
-        let reference = ref(database, "todos/");
-        onValue(reference, (snapshot) => {
-            console.log(snapshot.val()[location.state.userName]);
-            setList([...Object.values(snapshot.val()[location.state.userName])]);
-            console.log(listOfTodos);
-            // console.log(location.state);
-        });
-    };
-    let handelsignout = () => {
-        Signout().then((s) => {
-            console.log(s)
-            navigate('/login')
-        }).catch((er) => {
-            console.log(er)
-        })
-    }
+  const handleGetDatabase = () => {
+    let reference = ref(database, "todoapp/");
+    onValue(reference, (snapshot) => {
+      console.log(snapshot.val()[location.state.username]);
+      setList([...Object.values(snapshot.val()[location.state.username])]);
+      console.log(listOfTodos);
+      // console.log(location.state);
+    });
+  };
+  let handelsignout = () => {
+    Signout().then((s) => {
+      console.log(s)
+      navigate('/login')
+    }).catch((er) => {
+      console.log(er)
+    })
+  }
 
 
-    useEffect(() => {
-        handleGetDatabase();
-    }, []);
-    let date = new Date();
-    return (
-      <div>
-     <Box>
+  useEffect(() => {
+    handleGetDatabase();
+  }, []);
+  let date = new Date();
+  return (
+    <div className='bg'>
+      <Box>
         <Container
           className="main"
           maxWidth="md"
-          sx={{
-            marginTop: "40px",
-            marginBottom: "40px",
-          }}
+      
         >
           <Box marginBottom="20px">
-            {/* <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
               {auth && (
                 <div>
                   <IconButton
@@ -92,7 +89,7 @@ function ToDoApp() {
                       sx={{ marginRight: "10px" }}
                       color="primary"
                     >
-                      {location.state.userName}
+                      {location.state.username}
                     </Typography>
                     <AccountCircle color="success" fontSize="large" />
                   </IconButton>
@@ -115,9 +112,14 @@ function ToDoApp() {
                   </Menu>
                 </div>
               )}
-            </Box> */}
+            </Box>
 
-            <Typography  >
+            <Typography
+              variant="caption"
+              fontWeight="bold"
+              gutterBottom
+              color="primary"
+            >
               {date.toString()}
             </Typography>
 
@@ -155,6 +157,7 @@ function ToDoApp() {
             />
             <Button
               variant="contained"
+              color="warning"
               sx={{
                 fontSize: "18px",
                 padding: "10px 30px",
@@ -164,8 +167,9 @@ function ToDoApp() {
                 add();
               }}
               startIcon={<AddIcon />}
+              fontSize="larger"
             >
-              Add Todo
+              Add
             </Button>
           </Box>
 
@@ -190,9 +194,9 @@ function ToDoApp() {
           </Box>
         </Container>
       </Box>
-      </div>
-   
-    )
+    </div>
+
+  )
 }
 
 export default ToDoApp

@@ -3,7 +3,7 @@ import { borderRadius, Box } from '@mui/system'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { LoginUser } from '../Config/firebasemethods';
-
+import '../App.css'
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -15,49 +15,53 @@ function Login() {
             password
         }).then((success) => {
             console.log(success)
-            navigate('/todos')
+            navigate('/todoapp', {
+
+                state: success
+
+            })
         }).catch((err) => {
             console.log(err)
         })
     }
-    let locate =()=>{
-     
+    let locate = () => {
+
         navigate('/signup')
     }
     return (
-        <div >
-            <Box sx={{ backgroundColor: "crimson", height: "100vh", m: "auto" }}>
-                <Box sx={{ p: "200px" }}>
-                    <Box sx={{ backgroundColor: "#222", p: "10px", width: "30%", m: "auto", borderRadius: "15px" }}>
-                        <Typography variant='h4' sx={{ pt: 2, fontWeight: "bold" }} align='center' color='white'>Login</Typography>
-                        <Box sx={{px:"80px",py:3,width:"100%"}}>
-                            <Box>
+        <div className='bg'>
 
-                                <TextField id="outlined-basic" color='warning' label="Email" variant="standard" onChange={(e) => setEmail(e.target.value)} />
-                            </Box>
-                            <Box>
+            <Box sx={{ display:"flex",alignContent:"center", justifyContent:"center"}}>
+            <Box sx={{ border: "2px solid white", borderRadius: "15px", width: '45%' ,mt:26}}>
+                <Typography variant='h4' sx={{ pt: 2, fontWeight: "bold" }} align='center' color='white'>Login</Typography>
 
-                                <TextField id="outlined-basic" sx={{m:"auto"}} label="Password" variant="standard" onChange={(e) => setPassword(e.target.value)} />
-                            </Box>
-                            <Box>
+                <Box>
 
-                                <Button onClick={login}  sx={{ p: 2 }}>Login</Button>
-                            </Box>
-                           
+                    <TextField className='fields' id="outlined-basic" color='warning' label="Email" fullWidth variant="standard" onChange={(e) => setEmail(e.target.value)} />
+                </Box>
+                <Box>
 
-                            <Typography variant='p' component="span" sx={{ pt: 1}}  color='white'>Dont Have Account?</Typography>
-                            <Typography variant='p' component="span" sx={{ pt: 1}}  onClick={locate} color='blue'>
-                                <Button> SignUp
-                                    </Button></Typography>
+                    <TextField id="outlined-basic" sx={{color:'white' }} fullWidth label="Password" type='password' helperText='Donot Share Password With anyone' variant="standard" onChange={(e) => setPassword(e.target.value)} />
+                </Box>
+                <Box>
 
-                            
-                        </Box>
-                    </Box>
+                    <Button onClick={login} variant="contained" sx={{  m:3 }} >Login</Button>
                 </Box>
 
 
+                <Typography variant='p' component="span" sx={{ pt: 1 }} color='white'>Dont Have Account?</Typography>
+                <Typography variant='p' component="span" sx={{ pt: 1 }} onClick={locate} color='blue'>
+                    <Button> SignUp
+                    </Button></Typography>
+
+
+
+
             </Box>
-        </div>
+
+        </Box>
+            
+        </div >
     )
 }
 

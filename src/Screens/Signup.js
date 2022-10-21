@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import PopupAlert from '../Components/PopupAlert';
 import { signUpUser } from '../Config/firebasemethods';
+import '../App.css'
 
 function Signup() {
     const [email, setEmail] = useState('');
@@ -29,10 +30,9 @@ function Signup() {
         navigate('/login')
     }
     return (
-        <div>
-            <Box sx={{ backgroundColor: "crimson", height: "100vh", }}>
-                <Box sx={{ p: "200px" }}>
-                    <Box sx={{ backgroundColor: "#222", p: "10px", width: "30%", m: "auto", borderRadius: "15px" }}>
+        <div className='bg'>
+            
+                    <Box sx={{ backgroundColor: "#222", width: "45%",border:"2px solid white", m:'auto',  borderRadius: "15px" }}>
                         <Typography variant='h4' sx={{ pt: 2, fontWeight: "bold" }} align='center' color='white'>Sign Up</Typography>
                         <Box sx={{ px: "80px", py: 3, width: "100%" }}>
 
@@ -57,9 +57,7 @@ function Signup() {
                                 <Button> Login
                                 </Button></Typography>
                         </Box>
-                    </Box>
-                </Box>
-
+                
 
             </Box>
 
