@@ -19,15 +19,15 @@ function Navbar() {
                     </Typography>
 
                     {[{
-                        route: 'blog', name: "Blog"
+                        route: '/blog', name: "Blog"
                     },
                     {
-                        route: 'products', name: "Products"
+                        route: '/products', name: "Products"
                     },
                     {
-                        route: 'price', name: "Price"
+                        route: '/price', name: "Price"
                     }, {
-                        route: 'login', name: "Login"
+                        route: '/login', name: "Login"
                     }].map((page, index) => (
                         <Box key={index} onClick={() => navigate(page.route)}>
                             <Typography>

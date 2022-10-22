@@ -1,6 +1,6 @@
 .bg{
   background-color: #222;
-  height: 100vh;
+ min-height: 100vh;
 }
 .fields{
   color: aliceblue !important;
